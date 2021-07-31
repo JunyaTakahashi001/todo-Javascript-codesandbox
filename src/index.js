@@ -30,7 +30,9 @@ const onClickAdd = () => {
   deleteButton.innerText = "削除";
   // 生成と同時にイベントリスナーを付与
   deleteButton.addEventListener("click", () => {
-    alert("削除");
+    // 押された削除ボタンの親タグ(div)を未完了リストから削除
+    const deleteTaret = deleteButton.parentNode;
+    document.getElementById("incomplete-list").removeChild(deleteTaret);
   });
 
   // 作成した要素に子要素に設定
