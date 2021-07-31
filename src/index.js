@@ -6,12 +6,22 @@ const onClickAdd = () => {
   // 入力値が取得できたので、入力欄を空に初期化
   document.getElementById("add-text").value = "";
 
+  createIncompleteList(inputText);
+};
+
+// 未完了リストから指定の要素を削除
+const deleteFromIncompleteList = (target) => {
+  document.getElementById("incomplete-list").removeChild(target);
+};
+
+// 未完了リストに追加する関数
+const createIncompleteList = (text) => {
   /**
    * DOMを作成[createElement]HTMLタグを生成
    */
   // liタグ作成
   const li = document.createElement("li");
-  li.innerText = inputText; // liタグに取得した入力値をセット
+  li.innerText = text; // liタグに取得した入力値をセット
 
   // divタグ作成
   const div = document.createElement("div");
@@ -41,6 +51,15 @@ const onClickAdd = () => {
     // buttonタグ（戻す）生成
     const backButton = document.createElement("button");
     backButton.innerText = "戻す";
+    backButton.addEventListener("click", () => {
+      // 押された完了ボタンの親タグ(div)を完了リストから削除
+      const deleteTarget = backButton.parentNode;
+      document.getElementById("complete-list").removeChild(deleteTarget);
+
+      // テキスト取得
+      const text = backButton.parentNode.firstElementChild.innerText;
+      createIncompleteList(text);
+    });
 
     // divタグの子要素に追加
     addTarget.appendChild(li);
@@ -67,11 +86,6 @@ const onClickAdd = () => {
 
   // 未完了のリスト(ulタグ)に追加
   document.getElementById("incomplete-list").appendChild(div);
-};
-
-// 未完了リストから指定の要素を削除
-const deleteFromIncompleteList = (target) => {
-  document.getElementById("incomplete-list").removeChild(target);
 };
 
 // 追加ボタンのイベントリスナー
